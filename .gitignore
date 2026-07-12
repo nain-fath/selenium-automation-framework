@@ -1,0 +1,21 @@
+# Virtual Environment
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Reports
+reports/
+
+# Screenshots
+screenshots/
+
+# Logs
+logs/
+
+# VS Code
+.vscode/
+
+# Environment Variables
+.env
