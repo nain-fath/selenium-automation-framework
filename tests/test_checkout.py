@@ -2,11 +2,13 @@ from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
+from utilities.config_reader import ConfigReader
 
 
 def test_complete_checkout(driver):
 
-    driver.get("https://www.saucedemo.com")
+    config = ConfigReader.get_config()
+    driver.get(config["base_url"])
 
     login = LoginPage(driver)
     inventory = InventoryPage(driver)
@@ -14,7 +16,10 @@ def test_complete_checkout(driver):
     checkout = CheckoutPage(driver)
 
     # Login
-    login.login("standard_user", "secret_sauce")
+    login.login(
+    config["username"],
+    config["password"]
+)
     print("After Login:", driver.current_url)
 
     # Add product

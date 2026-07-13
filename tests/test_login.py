@@ -1,12 +1,18 @@
 from pages.login_page import LoginPage
+from utilities.config_reader import ConfigReader
 
 
 def test_valid_login(driver):
 
-    driver.get("https://www.saucedemo.com")
+    config = ConfigReader.get_config()
 
-    login_page = LoginPage(driver)
+    driver.get(config["base_url"])
 
-    login_page.login("standard_user", "secret_sauce")
+    login = LoginPage(driver)
+
+    login.login(
+        config["username"],
+        config["password"]
+    )
 
     assert "inventory" in driver.current_url
