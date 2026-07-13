@@ -3,57 +3,66 @@ from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
 from utilities.config_reader import ConfigReader
+from utilities.logger import Logger
 
 
 def test_complete_checkout(driver):
 
+    # Read configuration
     config = ConfigReader.get_config()
+
+    # Create logger
+    logger = Logger.get_logger()
+
+    # Open Website
+    logger.info("Opening SauceDemo website")
     driver.get(config["base_url"])
 
+    # Create Page Objects
     login = LoginPage(driver)
     inventory = InventoryPage(driver)
     cart = CartPage(driver)
     checkout = CheckoutPage(driver)
 
     # Login
+    logger.info("Logging into the application")
     login.login(
-    config["username"],
-    config["password"]
-)
-    print("After Login:", driver.current_url)
+        config["username"],
+        config["password"]
+    )
 
-    # Add product
+    # Add Product
+    logger.info("Adding Backpack to cart")
     inventory.add_backpack()
-    print("Cart Count:", inventory.get_cart_count())
 
-    # Open cart
+    # Open Cart
+    logger.info("Opening cart")
     inventory.open_cart()
-    print("After Open Cart:", driver.current_url)
 
-    # Verify product
-    print("Product:", cart.get_product_name())
+    # Verify Product
+    logger.info("Verifying product in cart")
+    assert cart.get_product_name() == "Sauce Labs Backpack"
 
-    # Check if checkout button exists
-    from selenium.webdriver.common.by import By
-
-    checkout_buttons = driver.find_elements(By.ID, "checkout")
-    print("Checkout buttons found:", len(checkout_buttons))
-
-    if checkout_buttons:
-        print("Checkout button displayed:", checkout_buttons[0].is_displayed())
-        print("Checkout button enabled:", checkout_buttons[0].is_enabled())
-
-    # Click checkout
+    # Checkout
+    logger.info("Proceeding to checkout")
     cart.click_checkout()
 
-    print("After Checkout Click:", driver.current_url)
-
-    # Fill details
+    # Customer Information
+    logger.info("Entering customer information")
     checkout.enter_first_name("Kaunain")
     checkout.enter_last_name("Fathima")
     checkout.enter_postal_code("560001")
 
+    # Continue
+    logger.info("Continuing checkout")
     checkout.click_continue()
+
+    # Finish
+    logger.info("Finishing order")
     checkout.click_finish()
 
+    # Verify Success
+    logger.info("Verifying success message")
     assert checkout.get_success_message() == "Thank you for your order!"
+
+    logger.info("Checkout test completed successfully")
