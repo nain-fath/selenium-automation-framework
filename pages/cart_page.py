@@ -4,13 +4,11 @@ from pages.base_page import BasePage
 
 class CartPage(BasePage):
 
-    # Locators
     CART_ITEM = (By.CLASS_NAME, "inventory_item_name")
     REMOVE_BACKPACK = (By.ID, "remove-sauce-labs-backpack")
     CONTINUE_SHOPPING = (By.ID, "continue-shopping")
     CHECKOUT = (By.ID, "checkout")
 
-    # Methods
     def get_product_name(self):
         return self.find(*self.CART_ITEM).text
 
