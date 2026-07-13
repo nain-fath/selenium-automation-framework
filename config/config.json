@@ -1,0 +1,7 @@
+{
+    "base_url": "https://www.saucedemo.com",
+    "username": "standard_user",
+    "password": "secret_sauce",
+    "browser": "chrome",
+    "implicit_wait": 5
+}
