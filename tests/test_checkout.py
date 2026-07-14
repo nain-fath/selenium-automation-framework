@@ -47,6 +47,10 @@ def test_complete_checkout(driver):
     logger.info("Proceeding to checkout")
     cart.click_checkout()
 
+    assert "checkout-step-one" in driver.current_url
+    print("Current URL:", driver.current_url)
+    print("Page Title:", driver.title)
+
     # Customer Information
     logger.info("Entering customer information")
     checkout.enter_first_name("Kaunain")

@@ -10,13 +10,13 @@ class CartPage(BasePage):
     CHECKOUT = (By.ID, "checkout")
 
     def get_product_name(self):
-        return self.find(*self.CART_ITEM).text
+        return self.find(self.CART_ITEM).text
 
     def remove_backpack(self):
-        self.click(*self.REMOVE_BACKPACK)
+        self.click(self.REMOVE_BACKPACK)
 
     def continue_shopping(self):
-        self.click(*self.CONTINUE_SHOPPING)
+        self.click(self.CONTINUE_SHOPPING)
 
     def click_checkout(self):
-        self.click(*self.CHECKOUT)
+        self.click(self.CHECKOUT)

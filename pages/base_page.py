@@ -8,18 +8,34 @@ class BasePage:
         self.driver = driver
         self.wait = WebDriverWait(driver, 10)
 
-    def find(self, by, value):
+    def find(self, locator):
         return self.wait.until(
-            EC.visibility_of_element_located((by, value))
+            EC.visibility_of_element_located(locator)
         )
 
-    def click(self, by, value):
-        self.wait.until(
-            EC.element_to_be_clickable((by, value))
-        ).click()
+    def click(self, locator):
+        element = self.wait.until(
+            EC.element_to_be_clickable(locator)
+        )
 
-    def enter_text(self, by, value, text):
-        element = self.find(by, value)
+        # Scroll element into view
+        self.driver.execute_script(
+            "arguments[0].scrollIntoView({block:'center'});",
+            element
+        )
+
+        # Normal click
+        try:
+            element.click()
+        except Exception:
+            # Fallback JavaScript click
+            self.driver.execute_script(
+                "arguments[0].click();",
+                element
+            )
+
+    def enter_text(self, locator, text):
+        element = self.find(locator)
         element.clear()
         element.send_keys(text)
 

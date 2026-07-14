@@ -44,6 +44,8 @@ def test_remove_product_from_cart(driver):
     # Remove Product
     logger.info("Removing Backpack from cart")
     cart.remove_backpack()
+    print("Current URL:", driver.current_url)
+    print("Page Title:", driver.title)
 
     # Continue Shopping
     logger.info("Continuing shopping")

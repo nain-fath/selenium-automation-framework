@@ -12,13 +12,13 @@ class InventoryPage(BasePage):
 
     # Methods
     def add_backpack(self):
-        self.click(*self.BACKPACK)
+        self.click(self.BACKPACK)
 
     def add_bike_light(self):
-        self.click(*self.BIKE_LIGHT)
+        self.click(self.BIKE_LIGHT)
 
     def open_cart(self):
-        self.click(*self.CART_ICON)
+        self.click(self.CART_ICON)
 
     def get_cart_count(self):
-        return self.find(*self.CART_BADGE).text
+        return self.find(self.CART_BADGE).text
